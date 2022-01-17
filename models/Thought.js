@@ -34,6 +34,8 @@ thoughtSchema.virtual('reactionCount')
 });
 
 
+module.exports = thoughtSchema;
+
 
 
 
