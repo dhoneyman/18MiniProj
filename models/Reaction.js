@@ -3,15 +3,15 @@ const { Schema, Types, isValidObjectId } = require('mongoose');
 const reactionSchema = new Schema(
     {
         reactionId: {
-            type: ObjectId,
-            default: ObjectId,
+            type: Schema.Types.ObjectId,
+            default: () => new Types.ObjectId(),
         },
         reactionBody: {
             type: String,
             required: true,
             maxlength: 280,
         },
-        username: {
+        userName: {
             type: String,
             required: true,
         },
