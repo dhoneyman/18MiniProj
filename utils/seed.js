@@ -9,6 +9,7 @@ connection.once('open', async () => {
 
   // Drop existing courses
   await User.deleteMany({});
+  await Thought.deleteMany({});
 
   // Drop existing students
   // await Student.deleteMany({});

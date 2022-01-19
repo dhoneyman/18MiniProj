@@ -38,12 +38,14 @@ module.exports = {
         Thought.create(req.body)
         .then((updateUser => { 
             console.log(req.body);
-            console.log(updateUser);
+
+            console.log('help',updateUser);
             User.findOneAndUpdate(
             { userName: req.body.userName },
-            { $addToSet: { thoughts: updateUser._id } },
+            { $addToSet: { thoughts: { _id: updateUser._id } }},
             // { runValidators: true, new: true }
-            )}
+            ).catch((error) => {
+                console.log(error)})            }
         ))
         
         .then((thought) => {
@@ -79,7 +81,8 @@ module.exports = {
     addReaction(req, res) {
         Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        { $addToSet: { reactions: req.body } },
+        { $addToSet: { reactions: { reaction: req.body.reaction, userName: req.body.userName }}},
+        // { $addToSet: { reaction: req.body.reaction}},
     //   { runValidators: true, new: true }
         )
         .then((thought) =>
@@ -89,14 +92,16 @@ module.exports = {
               .json({ message: 'No thought found with that ID :(' })
           : res.json(thought)
       )
-      .catch((err) => res.status(500).json(err));
+      .catch((err) => {
+          console.log(err)
+      res.status(500).json(err)});
         
     },
 
     removeReaction(req, res) {
         Thought.findOneAndUpdate(
           { _id: req.params.thoughtId },
-          { $pull: { reactions: { userId: req.params.reactionId } } },
+          { $pull: { reactions: { _id: req.params.reactionId } } },
         //   { runValidators: true, new: true }
         )
           .then((user) =>

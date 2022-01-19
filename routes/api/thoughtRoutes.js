@@ -17,6 +17,6 @@ router.route('/:thoughtId/reactions').post(addReaction).delete(removeReaction);
 
 // router.route('/:ThoughtId/assignments').post(addAssignment);
 
-// router.route('/:studentId/assignments/:assignmentId').delete(removeAssignment);
+router.route('/:thoughtId/reactions/:reactionId').delete(removeReaction);
 
 module.exports = router;
